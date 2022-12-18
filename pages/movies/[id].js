@@ -1,8 +1,8 @@
-import { useRouter } from 'next/router';
-import Image from 'next/image';
-import Head from 'next/head';
-import useSWR from 'swr';
-import { buildImageUrl } from 'utils/api';
+import { useRouter } from "next/router";
+import Image from "next/image";
+import Head from "next/head";
+import useSWR from "swr";
+import { buildImageUrl } from "utils/api";
 import {
   Badge,
   Box,
@@ -14,9 +14,10 @@ import {
   Stack,
   Tag,
   Text,
-} from '@chakra-ui/react';
-import Layout from 'components/Layout';
-import HistoryButton from 'components/HistoryButton';
+  Link,
+} from "@chakra-ui/react";
+import Layout from "components/Layout";
+import HistoryButton from "components/HistoryButton";
 
 const MovieContent = () => {
   const { id } = useRouter().query;
@@ -40,7 +41,7 @@ const MovieContent = () => {
     return <Text color="red">{data.status_message}</Text>;
   }
   return (
-    <Stack direction={['column', 'row']} spacing={4}>
+    <Stack direction={["column", "row"]} spacing={4}>
       <Head>
         <title>{data.title}</title>
       </Head>
@@ -49,7 +50,7 @@ const MovieContent = () => {
           <HistoryButton />
         </HStack>
         <Image
-          src={buildImageUrl(data.poster_path, 'w300')}
+          src={buildImageUrl(data.poster_path, "w300")}
           alt="Movie poster"
           layout="responsive"
           width="300"
@@ -62,7 +63,7 @@ const MovieContent = () => {
         <HStack justify="space-between">
           <Heading as="h2">{data.title}</Heading>
           <Box>
-            <Tag colorScheme="purple" variant="solid">
+            <Tag colorScheme="blue" variant="solid">
               {data.release_date}
             </Tag>
           </Box>
@@ -71,12 +72,22 @@ const MovieContent = () => {
 
         <Stack direction="row">
           {data.genres?.map((genre) => (
-            <Badge key={genre.id} colorScheme="purple" variant="outline">
+            <Badge key={genre.id} colorScheme="blue" variant="outline">
               {genre.name}
             </Badge>
           ))}
         </Stack>
-        <Box>{data.overview}</Box>
+        <Box bg="blue.100" color="black" borderRadius="8">
+          {data.overview}
+        </Box>
+        <Link href={`${data.homepage}`} isExternal color="blue.300">
+          {!data.homepage.length ? (
+            <Text> Oficial site not available </Text>
+          ) : (
+            <Text> Read more on oficial site..</Text>
+          )}
+        </Link>
+        <Box pt={4}>Rating: {data.vote_average}</Box>
       </Stack>
     </Stack>
   );

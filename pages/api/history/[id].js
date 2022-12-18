@@ -1,6 +1,6 @@
-import { fetcher } from 'utils/api';
-import History from 'models/History';
-import dbConnect from 'utils/dbConnect';
+import { fetcher } from "utils/api";
+import History from "models/History";
+import dbConnect from "utils/dbConnect";
 
 const getMovieUrl = (id) =>
   `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.TMDB_API_KEY}`;
@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   const { method } = req;
   const { id } = req.query;
 
-  if (method === 'GET') {
+  if (method === "GET") {
     const history = await History.findOne({ id });
 
     if (history) {
@@ -19,14 +19,21 @@ export default async function handler(req, res) {
     } else {
       res.status(404).json({ found: false });
     }
-  } else if (method === 'PUT') {
+  } else if (method === "PUT") {
     const movie = await fetcher(getMovieUrl(id));
 
-    const history = new History({ id, title: movie.title });
+    const history = new History({
+      id,
+      title: movie.title,
+      tagline: movie.tagline,
+      overview: movie.overview,
+      rating: movie.vote_average,
+      poster: movie.poster_path,
+    });
     await history.save();
 
     res.status(200).json({ found: true });
-  } else if (method === 'DELETE') {
+  } else if (method === "DELETE") {
     await History.deleteOne({ id });
     res.status(200).json({ found: false });
   }
