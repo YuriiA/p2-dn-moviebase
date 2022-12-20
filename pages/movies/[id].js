@@ -18,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import Layout from "components/Layout";
 import HistoryButton from "components/HistoryButton";
+import WatchlistButton from "components/WatchListButton";
 
 const MovieContent = () => {
   const { id } = useRouter().query;
@@ -48,6 +49,9 @@ const MovieContent = () => {
       <Box minW="300px" pos="relative">
         <HStack pos="absolute" zIndex={1} top={2} right={2}>
           <HistoryButton />
+        </HStack>
+        <HStack pos="absolute" zIndex={1} top={2} left={2}>
+          <WatchlistButton />
         </HStack>
         <Image
           src={buildImageUrl(data.poster_path, "w300")}
