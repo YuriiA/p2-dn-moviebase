@@ -5,8 +5,6 @@ import {
   Container,
   Flex,
   Box,
-  List,
-  ListItem,
   Progress,
   Text,
   VStack,

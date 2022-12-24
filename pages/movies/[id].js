@@ -86,12 +86,12 @@ const MovieContent = () => {
         </Box>
         <Link href={`${data.homepage}`} isExternal color="blue.300">
           {!data.homepage.length ? (
-            <Text> Oficial site not available </Text>
+            ""
           ) : (
             <Text> Read more on oficial site..</Text>
           )}
         </Link>
-        <Box pt={4}>Rating: {data.vote_average}</Box>
+        <Box pt={4}>Rating: {data.vote_average.toFixed(1)}</Box>
       </Stack>
     </Stack>
   );
